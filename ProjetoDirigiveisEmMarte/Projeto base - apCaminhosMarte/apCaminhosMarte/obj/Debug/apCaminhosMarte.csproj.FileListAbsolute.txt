@@ -18,3 +18,13 @@ D:\Trabalhos\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosM
 D:\Trabalhos\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
 D:\Trabalhos\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
 D:\Trabalhos\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe.config
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.pdb
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csprojAssemblyReference.cache
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Form1.resources
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Properties.Resources.resources
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.GenerateResource.cache
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
+C:\Users\Henrique\Desktop\Repositórios\ProjetoII-EDII\ProjetoDirigiveisEmMarte\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb

@@ -15,12 +15,14 @@ namespace apCaminhosMarte
         private const int inicioNomeCidade = 3, tamanhoNomeCidade = 15;
         private const int inicioCoordXCidade = 18, tamanhoCoordXCidade = 5;
         private const int inicioCoordYCidade = 23, tamanhoCoordYCidade = 5;
+        private int quantos = 0;
 
         public class No
         {
             private Cidade conteudo;
             private No direita;
             private No esquerda;
+
 
             public No (Cidade cidade)
             {
@@ -56,18 +58,23 @@ namespace apCaminhosMarte
 
         public No Raiz { get => raiz; set => raiz = value; }
 
+        public int Quantos { get => quantos; }
+
         public void Add(Cidade cidade)
         {
             No atual = null;
             if (raiz == null)
+            {
                 raiz = new No(cidade);
+                quantos++;
+            }
             else
             {
                 atual = raiz;
 
-                while(atual != null)
+                while (atual != null)
                 {
-                    if(atual.Conteudo.CodCidade < cidade.CodCidade)
+                    if (atual.Conteudo.CodCidade < cidade.CodCidade)
                     {
                         if (atual.Direita == null)
                         {
@@ -87,6 +94,7 @@ namespace apCaminhosMarte
                         else
                             atual = atual.Esquerda;
                     }
+                    quantos++;
                 }
             }
 
@@ -119,12 +127,12 @@ namespace apCaminhosMarte
                 if (primeiraVez)
                     yf = 25;
                 g.DrawLine(caneta, x, y, xf, yf);
-                Thread.Sleep(200);
+                //Thread.Sleep(200);
                 DesenharArvore(false, raiz.Esquerda, xf, yf, Math.PI / 2 + incremento,
                                        incremento * 0.55, comprimento * 0.75, g);
                 DesenharArvore(false, raiz.Direita, xf, yf, Math.PI / 2 - incremento,
                                         incremento * 0.55, comprimento * 0.75, g);
-                Thread.Sleep(500);
+                //Thread.Sleep(500);
                 SolidBrush preenchimento = new SolidBrush(Color.Black);
                 g.FillRectangle(preenchimento, xf - 25, yf - 5, 80, 50);
                 g.DrawString(Convert.ToString(raiz.Conteudo.NomeCidade), new Font("Comic Sans", 10),
