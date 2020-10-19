@@ -37,15 +37,25 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(grafo.MatrizAdjacente.Length.ToString());
-            if (origem == null || destino == null)
+            if (origem == null || destino == null ||origem == destino)
             {
-                MessageBox.Show("Selecione as cidades de origem e destino");
+                MessageBox.Show("Selecione corretamente as cidades de origem e destino");
                 return; //retorna para sair do metodo
             }
 
-            solucionador = new Solucionador(grafo.MatrizAdjacente);
+            solucionador = new Solucionador(grafo);
             solucionador.soluciona(origem.CodCidade, destino.CodCidade);
+
+            Lista<Lista<int[]>> caminhos = solucionador.Caminhos;
+            while(!caminhos.Vazia())
+            {
+                Lista<int[]> caminho = caminhos.GetInicio();
+                while(!caminho.Vazia())
+                {
+                    dgvCaminhos.Rows.Add(caminho.GetInicio()[0]);
+                    caminho.RemoverDoInicio();
+                }
+            }
         }
 
         private void pnlArvore_Paint(object sender, PaintEventArgs e)

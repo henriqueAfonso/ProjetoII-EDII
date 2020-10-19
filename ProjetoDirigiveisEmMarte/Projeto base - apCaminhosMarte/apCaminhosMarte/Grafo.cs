@@ -17,11 +17,13 @@ namespace apCaminhosMarte
         private const int inicioCusto = 15, tamanhoCusto = 5;
 
         private int[,] matrizAdjacente;// matriz adjacente que ira conter a possibilidade de ir de uma cidade a outra
+        private int quantasCidades;
 
         public Grafo(string nomeDoArquivo, int numeroDeCidades)
         {
             var arquivo = new StreamReader(nomeDoArquivo);
             matrizAdjacente = new int[numeroDeCidades, numeroDeCidades]; //cria a matriz com o numero de cidades existentes
+            quantasCidades = numeroDeCidades;
 
             var linha = arquivo.ReadLine();
             while (linha != null)
@@ -40,5 +42,7 @@ namespace apCaminhosMarte
         }
 
         public int[,] MatrizAdjacente { get => matrizAdjacente; }
+
+        public int QuantasCidades { get => quantasCidades; }
     }
 }
