@@ -46,36 +46,80 @@ namespace apCaminhosMarte
             solucionador = new Solucionador(grafo);
             solucionador.Soluciona(origem.CodCidade, destino.CodCidade);
 
-            List<List<int[]>> caminhos = solucionador.Caminhos;
+            List<List<Caminho>> caminhos = solucionador.Caminhos;
 
             dgvCaminhos.Rows.Clear();//remove todas as linhas existentes
             dgvCaminhos.Columns.Clear();//remove todas as colunas existentes
-            dgvCaminhos.Columns.Add("cidade", "Cidade");//adiciona uma coluna para que seja possivel adicionar uma linha
+            dgvCaminhos.Columns.Add("origem", "Origem");//adiciona uma coluna para que seja possivel adicionar uma linha
+            dgvCaminhos.Columns["origem"].Width = 40;
 
             int linha = -1;//indice da linha que sera alterada no DataGridView
             int movimentoAtual = 0;//indice da coluna que será alterada no DataGridView
 
-            foreach (List<int[]>caminho in caminhos)
+            //algoritmo que exibe todos os caminhos no dgvCaminhos
+            foreach (List<Caminho>caminho in caminhos)
             {
                 dgvCaminhos.Rows.Add(); //adiciona uma linha para cada caminho
                 linha++;//incrementa o valor da linha
                 movimentoAtual = 0;//
-                foreach (int[] movimento in caminho)
+                foreach (Caminho movimento in caminho)
                 {
                     try//tenta adicionar o valor a coluna especificada
                     {
-                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento[0];
+                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento.CodOrigem;
                     }
                     catch(Exception g)//se der exceção porque a coluna não existe
                     {
                         //adiciona uma coluna nova e tenta adicionar o valor novamente
                         dgvCaminhos.Columns.Add("cidade" + movimentoAtual, "Cidade");
-                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento[0];
+                        dgvCaminhos.Columns[movimentoAtual].Width = 40;
+                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento.CodOrigem;
                     }
                     
                     movimentoAtual++;
                 }
+                try//tenta adicionar o valor a coluna especificada
+                {
+                    dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = destino.CodCidade;
+                }
+                catch (Exception g)//se der exceção porque a coluna não existe
+                {
+                    //adiciona uma coluna nova e tenta adicionar o valor novamente
+                    dgvCaminhos.Columns.Add("cidade" + movimentoAtual, "Cidade");
+                    dgvCaminhos.Columns[movimentoAtual].Width = 40;
+                    dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = destino.CodCidade;
+                }                
             }
+
+            List<Caminho> melhorCaminho = solucionador.MelhorCaminho;
+            movimentoAtual = 0;
+            linha = 0;
+
+            dgvMelhorCaminho.Rows.Clear();//remove todas as linhas existentes
+            dgvMelhorCaminho.Columns.Clear();//remove todas as colunas existentes
+            dgvMelhorCaminho.Columns.Add("origem", "Origem");//adiciona uma coluna para que seja possivel adicionar uma linha
+            dgvMelhorCaminho.Columns["origem"].Width = 40;
+            dgvMelhorCaminho.Rows.Add(); //adiciona uma linha para o melhor caminho
+
+            foreach (Caminho movimento in melhorCaminho)
+            {
+                try//tenta adicionar o valor a coluna especificada
+                {
+                    dgvMelhorCaminho.Rows[linha].Cells[movimentoAtual].Value = movimento.CodOrigem;
+                }
+                catch (Exception g)//se der exceção porque a coluna não existe
+                {
+                    //adiciona uma coluna nova e tenta adicionar o valor novamente
+                    dgvMelhorCaminho.Columns.Add("cidade" + movimentoAtual, "Cidade");
+                    dgvMelhorCaminho.Columns[movimentoAtual].Width = 40;
+                    dgvMelhorCaminho.Rows[linha].Cells[movimentoAtual].Value = movimento.CodOrigem;
+                }
+
+                movimentoAtual++;
+            }
+            dgvMelhorCaminho.Columns.Add("destino", "Destino");
+            dgvMelhorCaminho.Columns[movimentoAtual].Width = 40;
+            dgvMelhorCaminho.Rows[linha].Cells[movimentoAtual].Value = destino.CodCidade;
         }
 
         private void pnlArvore_Paint(object sender, PaintEventArgs e)
@@ -95,6 +139,16 @@ namespace apCaminhosMarte
         private void lsbDestino_SelectedIndexChanged(object sender, EventArgs e)
         {
             destino = arvore.EnconctrarCidade(int.Parse(lsbDestino.SelectedItem.ToString().Substring(0, 2)), arvore.Raiz);
+        }
+
+        private void dgvCaminhos_SelectionChanged(object sender, EventArgs e)
+        {
+            for(int i = 0; i<dgvCaminhos.ColumnCount; i++)
+            {
+                if (dgvCaminhos.CurrentRow.Cells[i].Value == null)
+                    break;//sai do metodo quando no momento em que nçao houver mais valores nas celulas seguintes
+            }
+
         }
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
