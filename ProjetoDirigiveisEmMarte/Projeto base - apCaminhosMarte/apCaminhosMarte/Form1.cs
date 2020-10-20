@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,6 +32,8 @@ namespace apCaminhosMarte
             {
                 grafo = new Grafo(openCaminhos.FileName, arvore.Quantos);
             }
+
+            
         }
 
         
@@ -143,23 +146,82 @@ namespace apCaminhosMarte
 
         private void dgvCaminhos_SelectionChanged(object sender, EventArgs e)
         {
-            for(int i = 0; i<dgvCaminhos.ColumnCount; i++)
-            {
-                if (dgvCaminhos.CurrentRow.Cells[i].Value == null)
-                    break;//sai do metodo quando no momento em que nçao houver mais valores nas celulas seguintes
-            }
+            Graphics g = pbMapa.CreateGraphics();
+            Pen p = new Pen(Color.Red,2);
+            int codCidade, codProx;
+            Cidade cidade, prox;
 
+            double fatorDeReducaoX = pbMapa.Width / 4096.0;
+            double fatorDeReducaoY = pbMapa.Height / 2048.0;
+
+            g.Clear(Color.Transparent);
+            g.DrawImage(pbMapa.Image, 0, 0, pbMapa.Width, pbMapa.Height);
+            arvore.DesenharCidades(fatorDeReducaoX, fatorDeReducaoY, g, arvore.Raiz);
+
+            for (int i = 0; i<dgvCaminhos.ColumnCount-1; i++)
+            {
+                try
+                {
+                    codCidade = (int)dgvCaminhos.CurrentRow.Cells[i].Value;
+                    codProx = (int)dgvCaminhos.CurrentRow.Cells[i + 1].Value;
+                }
+                catch (Exception ex)
+                {
+                    break; //só lança excessaõ se um dos valores for null
+                }
+
+                cidade = arvore.EnconctrarCidade(codCidade, arvore.Raiz);
+                prox = arvore.EnconctrarCidade(codProx, arvore.Raiz);
+                g.DrawLine(p, (float)(cidade.CoordX* fatorDeReducaoX), (float)(cidade.CoordY* fatorDeReducaoY), (float)(prox.CoordX* fatorDeReducaoX), (float)(prox.CoordY* fatorDeReducaoY));
+
+            }
+        }
+
+        private void dgvMelhorCaminho_SelectionChanged(object sender, EventArgs e)
+        {
+            Graphics g = pbMapa.CreateGraphics();
+            Pen p = new Pen(Color.Green, 2);
+            int codCidade, codProx;
+            Cidade cidade, prox;
+
+            double fatorDeReducaoX = pbMapa.Width / 4096.0;
+            double fatorDeReducaoY = pbMapa.Height / 2048.0;
+
+            g.Clear(Color.Transparent);
+            g.DrawImage(pbMapa.Image, 0, 0, pbMapa.Width, pbMapa.Height);
+            arvore.DesenharCidades(fatorDeReducaoX, fatorDeReducaoY, g, arvore.Raiz);
+
+            for (int i = 0; i < dgvMelhorCaminho.ColumnCount - 1; i++)
+            {
+                try
+                {
+                    codCidade = (int)dgvMelhorCaminho.CurrentRow.Cells[i].Value;
+                    codProx = (int)dgvMelhorCaminho.CurrentRow.Cells[i + 1].Value;
+                }
+                catch (Exception ex)
+                {
+                    break; //só lança excessaõ se um dos valores for null
+                }
+
+                cidade = arvore.EnconctrarCidade(codCidade, arvore.Raiz);
+                prox = arvore.EnconctrarCidade(codProx, arvore.Raiz);
+                g.DrawLine(p, (float)(cidade.CoordX * fatorDeReducaoX), (float)(cidade.CoordY * fatorDeReducaoY), (float)(prox.CoordX * fatorDeReducaoX), (float)(prox.CoordY * fatorDeReducaoY));
+
+            }
+            dgvMelhorCaminho.ClearSelection();
         }
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
             if(arvore != null)
             {
+                
                 Graphics g = e.Graphics;
                 double fatorDeReducaoX = pbMapa.Width / 4096.0;
                 double fatorDeReducaoY = pbMapa.Height / 2048.0;
                 arvore.DesenharCidades(fatorDeReducaoX, fatorDeReducaoY, g, arvore.Raiz);
             }
         }
+
     }
 }
