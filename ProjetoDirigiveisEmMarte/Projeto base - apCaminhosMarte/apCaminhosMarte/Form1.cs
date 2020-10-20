@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Henrique Afonso MArtins - 19178
+//Guilherme Brentan de Oliveira - 19175
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,21 +45,21 @@ namespace apCaminhosMarte
             if (origem == null || destino == null ||origem == destino)
             {
                 MessageBox.Show("Selecione corretamente as cidades de origem e destino");
-                return; //retorna para sair do metodo
+                return; //retorna para sair do metodo, ja que as cidades selecionadas são inválidas
             }
 
-            solucionador = new Solucionador(grafo);
-            solucionador.Soluciona(origem.CodCidade, destino.CodCidade);
+            solucionador = new Solucionador(grafo);//instancia da classe solucionador, passando como parametro o grafo construido a partir das cidades do aruivo texto
+            solucionador.Soluciona(origem.CodCidade, destino.CodCidade);//chama o método que busca todos os caminhos entre a origem e o destino
 
-            List<List<Caminho>> caminhos = solucionador.Caminhos;
+            List<List<Caminho>> caminhos = solucionador.Caminhos;//lista com todos os caminhos achados pelo solucionador
 
             dgvCaminhos.Rows.Clear();//remove todas as linhas existentes
             dgvCaminhos.Columns.Clear();//remove todas as colunas existentes
             dgvCaminhos.Columns.Add("origem", "Origem");//adiciona uma coluna para que seja possivel adicionar uma linha
-            dgvCaminhos.Columns["origem"].Width = 40;
+            dgvCaminhos.Columns["origem"].Width = 40;//formata a largura das celulas do datagridview
 
             int linha = -1;//indice da linha que sera alterada no DataGridView
-            int movimentoAtual = 0;//indice da coluna que será alterada no DataGridView
+            int movimentoAtual;//indice da coluna que será alterada no DataGridView
 
             //algoritmo que exibe todos os caminhos no dgvCaminhos
             foreach (List<Caminho>caminho in caminhos)
@@ -83,6 +85,7 @@ namespace apCaminhosMarte
                 }
                 try//tenta adicionar o valor a coluna especificada
                 {
+                    //adiciona na ultima coluna de cada linha o codigo da cidade destino
                     dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = destino.CodCidade;
                 }
                 catch (Exception g)//se der exceção porque a coluna não existe
@@ -94,9 +97,9 @@ namespace apCaminhosMarte
                 }                
             }
 
-            List<Caminho> melhorCaminho = solucionador.MelhorCaminho;
-            movimentoAtual = 0;
-            linha = 0;
+            List<Caminho> melhorCaminho = solucionador.MelhorCaminho;//variavel que contem o melhor caminho
+            movimentoAtual = 0;//reseta o valor movimentoAtual
+            linha = 0;//define a linha como zero, já que só existe um melhor caminho
 
             dgvMelhorCaminho.Rows.Clear();//remove todas as linhas existentes
             dgvMelhorCaminho.Columns.Clear();//remove todas as colunas existentes
@@ -154,24 +157,27 @@ namespace apCaminhosMarte
             double fatorDeReducaoX = pbMapa.Width / 4096.0;
             double fatorDeReducaoY = pbMapa.Height / 2048.0;
 
-            g.Clear(Color.Transparent);
-            g.DrawImage(pbMapa.Image, 0, 0, pbMapa.Width, pbMapa.Height);
-            arvore.DesenharCidades(fatorDeReducaoX, fatorDeReducaoY, g, arvore.Raiz);
+            g.Clear(Color.Transparent);//limpa o pbMapa
+            g.DrawImage(pbMapa.Image, 0, 0, pbMapa.Width, pbMapa.Height);//redesenha o mapa
+            arvore.DesenharCidades(fatorDeReducaoX, fatorDeReducaoY, g, arvore.Raiz);//redesenha as cidades
 
+            //pra cada o valor de cada celula na linha selecionada
             for (int i = 0; i<dgvCaminhos.ColumnCount-1; i++)
             {
-                try
+                try//verifica se tem valor na celula
                 {
                     codCidade = (int)dgvCaminhos.CurrentRow.Cells[i].Value;
                     codProx = (int)dgvCaminhos.CurrentRow.Cells[i + 1].Value;
                 }
-                catch (Exception ex)
+                catch (Exception ex)//se ocorrer erro, é porque não há nenhum valor em alguma das celulas
                 {
-                    break; //só lança excessaõ se um dos valores for null
+                    break; //sai da for, já que não haverá mais nenhum valor a partir daqui
                 }
-
+                //pega as cidades referentes aos codigos retornados
                 cidade = arvore.EnconctrarCidade(codCidade, arvore.Raiz);
                 prox = arvore.EnconctrarCidade(codProx, arvore.Raiz);
+
+                //desenha uma linha entre as cidades retornadas
                 g.DrawLine(p, (float)(cidade.CoordX* fatorDeReducaoX), (float)(cidade.CoordY* fatorDeReducaoY), (float)(prox.CoordX* fatorDeReducaoX), (float)(prox.CoordY* fatorDeReducaoY));
 
             }

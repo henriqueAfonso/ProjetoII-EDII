@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Henrique Afonso MArtins - 19178
+//Guilherme Brentan de Oliveira - 19175
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
