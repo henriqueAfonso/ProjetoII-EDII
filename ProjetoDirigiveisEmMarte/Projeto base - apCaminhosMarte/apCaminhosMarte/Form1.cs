@@ -44,16 +44,36 @@ namespace apCaminhosMarte
             }
 
             solucionador = new Solucionador(grafo);
-            solucionador.soluciona(origem.CodCidade, destino.CodCidade);
+            solucionador.Soluciona(origem.CodCidade, destino.CodCidade);
 
-            Lista<Lista<int[]>> caminhos = solucionador.Caminhos;
-            while(!caminhos.Vazia())
+            List<List<int[]>> caminhos = solucionador.Caminhos;
+
+            dgvCaminhos.Rows.Clear();//remove todas as linhas existentes
+            dgvCaminhos.Columns.Clear();//remove todas as colunas existentes
+            dgvCaminhos.Columns.Add("cidade", "Cidade");//adiciona uma coluna para que seja possivel adicionar uma linha
+
+            int linha = -1;//indice da linha que sera alterada no DataGridView
+            int movimentoAtual = 0;//indice da coluna que será alterada no DataGridView
+
+            foreach (List<int[]>caminho in caminhos)
             {
-                Lista<int[]> caminho = caminhos.GetInicio();
-                while(!caminho.Vazia())
+                dgvCaminhos.Rows.Add(); //adiciona uma linha para cada caminho
+                linha++;//incrementa o valor da linha
+                movimentoAtual = 0;//
+                foreach (int[] movimento in caminho)
                 {
-                    dgvCaminhos.Rows.Add(caminho.GetInicio()[0]);
-                    caminho.RemoverDoInicio();
+                    try//tenta adicionar o valor a coluna especificada
+                    {
+                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento[0];
+                    }
+                    catch(Exception g)//se der exceção porque a coluna não existe
+                    {
+                        //adiciona uma coluna nova e tenta adicionar o valor novamente
+                        dgvCaminhos.Columns.Add("cidade" + movimentoAtual, "Cidade");
+                        dgvCaminhos.Rows[linha].Cells[movimentoAtual].Value = movimento[0];
+                    }
+                    
+                    movimentoAtual++;
                 }
             }
         }

@@ -39,9 +39,10 @@ namespace apCaminhosMarte
         {
             var arquivo = new StreamReader(nomeArquivo);
 
-            var linha = arquivo.ReadLine();        
-            while(linha != null)
+            var linha = arquivo.ReadLine();
+            while (linha != null)
             {
+                quantos++;
                 int codCidade = int.Parse(linha.Substring(inicioCodCidade, tamanhoCodCidade));
                 string nomeCidade = linha.Substring(inicioNomeCidade, tamanhoNomeCidade);
                 int coordX = int.Parse(linha.Substring(inicioCoordXCidade, tamanhoCoordXCidade));
@@ -66,7 +67,6 @@ namespace apCaminhosMarte
             if (raiz == null)
             {
                 raiz = new No(cidade);
-                quantos++;
             }
             else
             {
@@ -94,8 +94,8 @@ namespace apCaminhosMarte
                         else
                             atual = atual.Esquerda;
                     }
-                    quantos++;
                 }
+                
             }
 
         }

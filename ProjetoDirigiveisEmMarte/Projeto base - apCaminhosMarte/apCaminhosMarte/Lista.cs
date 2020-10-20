@@ -143,5 +143,22 @@ namespace apCaminhosMarte
 
             return ret;
         }
+
+        public Lista(Lista<X> modelo)
+        {
+            while(!modelo.Vazia())
+            {
+                this.InserirNoInicio(modelo.GetFim());
+                modelo.RemoverDoFim();
+            }
+        }
+
+        public void Clonar(List<int[]> original, List<int[]> segundo)
+        {
+            foreach (int[] caminho in original)
+            {
+                segundo.Add(caminho);
+            }
+        }
     }
 }
