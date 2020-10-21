@@ -1,2 +1,2 @@
 # ProjetoII-EDII
- Recursão em arvores binárias
+ Projeto que implementa o sistema de backtracking recursivo em uma matriz de adjacencias
